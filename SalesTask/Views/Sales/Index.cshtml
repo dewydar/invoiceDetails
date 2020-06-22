@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+    #msg {
+        position: fixed;
+        top: 30px;
+        right: 20px;
+        z-index: 99999999
+    }
+
+    h4 {
+        opacity: 0.5;
+    }
+</style>
+<hr /><hr />
+<div class="container">
+    <div class="row">
+        <form id="addForm">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label">Invoice No</label>
+                    <input type="number" placeholder="Invoice No" id="ClientName" name="ClientName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Invoice Date</label>
+                    <input type="date" id="SalesDate" name="SalesDate" class="form-control" />
+                </div>
+                <div class="form-group dropdown ">
+                    <label class="control-label">Store</label>
+                    <select id="storeddl" name="storeddl" class="form-control">
+                        <option value="" disabled selected hidden>- Select item -</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <a id="btnAdd" class="btn btn-primary">Add Invoice Details</a>
+                </div>
+            </div>
+            <div class="col-md-10" id="SelectedItems">
+                <h4 id="cliName">Client Name</h4>
+                <h4 id="cliDate">Enter Date</h4>
+                <h4 id="cliStore">Store Name</h4>
+                <table class="table table-responsive" id="tblItem">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Item</th>
+                            <th>Unit</th>
+                            <th>Price</th>
+                            <th>Qty</th>
+                            <th>Total</th>
+                            <th>Discount</th>
+                            <th>Net</th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div class="total" style="margin-bottom:50px">
+                    before tax:
+                    <input type="number" placeholder="Total befour tax"  id="Totalbefourtax" name="Totalbefourtax" disabled style="border:none" class="form-control" />
+                    tax:
+                    <input type="number" placeholder="tax" id="tax" name="tax" style="border:none" class="form-control" />
+                    after tax:
+                    <input type="number" placeholder="Total after tax" id="TotalAftertax" name="TotalAftertax" disabled style="border:none" class="form-control" />
+                </div>
+
+            </div>
+            <div class="form-group text-center col-md-12">
+                <button class="btn btn-success" type="submit" style="width:200px">Save Bell</button>
+            </div>
+        </form>
+    </div>
+</div>
+<p id="msg"></p>
+@section scripts{
+    <script src="~/Scripts/addtional/InvoceJS.js"></script>
+
+}
+

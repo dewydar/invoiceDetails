@@ -1,0 +1,57 @@
+﻿@model IEnumerable<SalesTask.Models.InvoceDetail>
+
+@{
+    ViewBag.Title = "GetInvoiceDetails";
+}
+
+<h2>Invoice No.(@ViewBag.invoiceid) Details</h2>
+
+<div>
+    <hr />
+    <div class="col-md-10">
+        <label>Invoice ID</label>
+        <h4 class="form-control">@ViewBag.invoiceid</h4>
+        <label>Invoice Date</label>
+        <h4 class="form-control">@ViewBag.invoicedate</h4>
+        <label>StoreNAme</label>
+        <h4 class="form-control">@ViewBag.storename</h4>
+        @{int count = 1;}
+        <table class="table table-responsive" id="tblItem">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Item</th>
+                    <th>Unit</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                    <th>Discount</th>
+                    <th>Net</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@count</td>
+                        <td>@item.Item.itemName</td>
+                        <td>@item.Unit.unitName</td>
+                        <td>@item.price</td>
+                        <td>@item.quantity</td>
+                        <td>@item.total</td>
+                        <td>@item.discount</td>
+                        <td>@item.net</td>
+                        <td></td>
+                        @{count = count + 1;}
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    <p>
+        @Html.ActionLink("Back To List", "GetAllInvoice",null, new { @class = "btn btn-primary" })
+    </p>
+    </div>
+</div>

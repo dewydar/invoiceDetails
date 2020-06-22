@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SalesDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="SalesDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="InvoceDetails" EntityType="SalesDBModel.InvoceDetail" />
+    <EntitySet Name="Invoices" EntityType="SalesDBModel.Invoice" />
+    <EntitySet Name="Items" EntityType="SalesDBModel.Item" />
+    <EntitySet Name="Stores" EntityType="SalesDBModel.Store" />
+    <EntitySet Name="sysdiagrams" EntityType="SalesDBModel.sysdiagram" />
+    <EntitySet Name="Units" EntityType="SalesDBModel.Unit" />
+    <AssociationSet Name="FK_InvoceDetails_Invoice" Association="SalesDBModel.FK_InvoceDetails_Invoice">
+      <End Role="Invoice" EntitySet="Invoices" />
+      <End Role="InvoceDetail" EntitySet="InvoceDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoceDetails_Item" Association="SalesDBModel.FK_InvoceDetails_Item">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="InvoceDetail" EntitySet="InvoceDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InvoceDetails_Unit" Association="SalesDBModel.FK_InvoceDetails_Unit">
+      <End Role="Unit" EntitySet="Units" />
+      <End Role="InvoceDetail" EntitySet="InvoceDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Invoice_Stores" Association="SalesDBModel.FK_Invoice_Stores">
+      <End Role="Store" EntitySet="Stores" />
+      <End Role="Invoice" EntitySet="Invoices" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="InvoceDetail">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="invoiceID" Type="Int32" />
+    <Property Name="itemID" Type="Int32" />
+    <Property Name="unitID" Type="Int32" />
+    <Property Name="total" Type="Double" Nullable="false" />
+    <Property Name="price" Type="Double" Nullable="false" />
+    <Property Name="quantity" Type="Int32" Nullable="false" />
+    <Property Name="discount" Type="Double" Nullable="false" />
+    <Property Name="net" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Invoice" Relationship="SalesDBModel.FK_InvoceDetails_Invoice" FromRole="InvoceDetail" ToRole="Invoice" />
+    <NavigationProperty Name="Item" Relationship="SalesDBModel.FK_InvoceDetails_Item" FromRole="InvoceDetail" ToRole="Item" />
+    <NavigationProperty Name="Unit" Relationship="SalesDBModel.FK_InvoceDetails_Unit" FromRole="InvoceDetail" ToRole="Unit" />
+  </EntityType>
+  <EntityType Name="Invoice">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="saleDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="invoiceId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="totalAfterTax" Type="Double" Nullable="false" />
+    <Property Name="storeID" Type="Int32" />
+    <Property Name="tax" Type="Double" Nullable="false" />
+    <Property Name="totalBefourTax" Type="Double" Nullable="false" />
+    <NavigationProperty Name="InvoceDetails" Relationship="SalesDBModel.FK_InvoceDetails_Invoice" FromRole="Invoice" ToRole="InvoceDetail" />
+    <NavigationProperty Name="Store" Relationship="SalesDBModel.FK_Invoice_Stores" FromRole="Invoice" ToRole="Store" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="itemName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="InvoceDetails" Relationship="SalesDBModel.FK_InvoceDetails_Item" FromRole="Item" ToRole="InvoceDetail" />
+  </EntityType>
+  <EntityType Name="Store">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="storeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Invoices" Relationship="SalesDBModel.FK_Invoice_Stores" FromRole="Store" ToRole="Invoice" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Unit">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="unitName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="InvoceDetails" Relationship="SalesDBModel.FK_InvoceDetails_Unit" FromRole="Unit" ToRole="InvoceDetail" />
+  </EntityType>
+  <Association Name="FK_InvoceDetails_Invoice">
+    <End Type="SalesDBModel.Invoice" Role="Invoice" Multiplicity="0..1" />
+    <End Type="SalesDBModel.InvoceDetail" Role="InvoceDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Invoice">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="InvoceDetail">
+        <PropertyRef Name="invoiceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InvoceDetails_Item">
+    <End Type="SalesDBModel.Item" Role="Item" Multiplicity="0..1" />
+    <End Type="SalesDBModel.InvoceDetail" Role="InvoceDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="InvoceDetail">
+        <PropertyRef Name="itemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InvoceDetails_Unit">
+    <End Type="SalesDBModel.Unit" Role="Unit" Multiplicity="0..1" />
+    <End Type="SalesDBModel.InvoceDetail" Role="InvoceDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Unit">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="InvoceDetail">
+        <PropertyRef Name="unitID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Invoice_Stores">
+    <End Type="SalesDBModel.Store" Role="Store" Multiplicity="0..1" />
+    <End Type="SalesDBModel.Invoice" Role="Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Store">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Invoice">
+        <PropertyRef Name="storeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

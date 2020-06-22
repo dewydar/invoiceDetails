@@ -1,0 +1,44 @@
+﻿@model IEnumerable<SalesTask.Models.Invoice>
+
+@{
+    ViewBag.Title = "GetAllInvoice";
+}
+
+<h2>All saved Invoices</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Index",null, new { @class = "btn btn-primary" })
+</p>
+<div class="col-md-10">
+    @{int count = 1;}
+    <table class="table table-responsive" id="tblItem">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Invoice Id</th>
+                <th>Invoice Date</th>
+                <th>Store Name</th>
+                <th>Total Befour Taxes</th>
+                <th>Taxes %</th>
+                <th>Total After Taxes</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@count</td>
+                    <td>@item.invoiceId</td>
+                    <td>@item.saleDate</td>
+                    <td>@item.Store.storeName</td>
+                    <td>@item.totalBefourTax</td>
+                    <td>@item.tax %</td>
+                    <td>@item.totalAfterTax</td>
+                    <td></td>
+                    @{count = count + 1;}
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
